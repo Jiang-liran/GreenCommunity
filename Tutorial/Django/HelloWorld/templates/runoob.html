@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Runoob 页面</title>
+</head>
+<body>
+    <!-- 
+    <h1>{{ hello }}</h1>
+    <h1>{{ views_list }}</h1>
+    <h2>{{ views_list.0 }}</h2>
+    <h3>{{ views_list.1 }}</h3>
+    <p>{{ views_list.2 }}</p>
+    {{ time | date:"Y-m-d H:i:s" }}
+    -->
+
+    <!--
+    <p>views_str 内容: {{ views_str }}</p>
+    {{ views_str|safe }} 
+    -->
+
+    <!--
+    {% for i in views_list reversed %}
+    {{ i }}
+    {% endfor %}
+    -->
+
+    {% block mainbody %}
+    <p>继承了 base.html 文件</p>
+    {{ name }}
+    <img src="{% static 'images/OIP.jpg' %}" alt="风景"> 
+    {% endblock %}
+
+
+   
+</body>
+</html>
