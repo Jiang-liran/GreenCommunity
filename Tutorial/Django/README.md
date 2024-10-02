@@ -1,4 +1,4 @@
-- # Django 学习笔记
+ # Django 学习笔记
 
   ## 项目简介
 
@@ -15,42 +15,7 @@
   - 完成至少一个完整的 Django 项目
 
   ## 学习进展
-
-  ### 2024-10-01 学习内容
-
-  今天的学习主要集中在 Django 的基础安装、创建第一个入门项目以及理解和使用 Django 的模板系统。具体内容包括：
-
-  1. **Django 的安装**
-     
-     - 通过 `pip` 安装 Django：
-       ```bash
-       pip install django
-       ```
-     - 验证安装是否成功：
-       ```bash
-       django-admin --version
-       ```
-     - 了解 Django 的版本和安装路径。
-     
-  2. **创建第一个入门项目（Hello World）**
-     - 使用 `django-admin` 创建一个新的 Django 项目：
-       ```bash
-       django-admin startproject hello_world
-       ```
-     - 进入项目目录并运行开发服务器：
-       ```bash
-       cd hello_world
-       python manage.py runserver
-       ```
-     - 在浏览器中访问 [http://127.0.0.1:8000/](http://127.0.0.1:8000/) ，看到 Django 的欢迎页面，确认项目成功运行。
-
-  3. **Django 的模板系统**
-     - 理解模板（Templates）的作用：用于定义应用的前端界面，与视图（Views）分离。
-     - 创建一个简单的模板文件 `runoob.html`：
-     - 配置视图（View）以渲染模板：
-     - 设置 URL 路由：
-     - 在浏览器中访问 [http://127.0.0.1:8000/](http://127.0.0.1:8000/)，看到自定义的页面，验证模板系统的基本使用。
-     - 以及各种标签模板的使用，巨多，详见模板文件或者[菜鸟教程]([Django 模板 | 菜鸟教程 (runoob.com)](https://www.runoob.com/django/django-template.html))
+  关于每日的学习进展，请见文件[学习进展.md](学习进展.md)
 
   ## 文件夹结构
 
@@ -79,7 +44,8 @@
 
   ## 许可协议
 
-  本项目采用 [MIT 许可协议](LICENSE) 进行许可。详情请参阅 `LICENSE` 文件。
+
+本项目采用 [MIT 许可协议](LICENSE) 进行许可。详情请参阅 `LICENSE` 文件。
 
   ## 联系方式
 
@@ -91,4 +57,4 @@
   ## 致谢
 
   - 感谢所有提供优质Django学习资源的作者和社区成员。
-  - 感谢家人和朋友的支持与鼓励。
+- 感谢家人和朋友的支持与鼓励。
