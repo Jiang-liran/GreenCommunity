@@ -1,0 +1,29 @@
+<!-- pages/busDetail/busDetail.wxml -->
+<view class="container">
+  <view class="line-info">
+    <text class="line-name">{{lineInfo.bus_staname}}</text>
+    <text>起点站：{{lineInfo.sta_sta}}</text>
+    <text>终点站：{{lineInfo.end_sta}}</text>
+    <text>首班车：{{lineInfo.fir_time}}</text>
+    <text>末班车：{{lineInfo.end_time}}</text>
+    <text>票价：{{lineInfo.bus_money}}</text>
+  </view>
+
+  <map id="busMap" class="map"
+       longitude="{{longitude}}"
+       latitude="{{latitude}}"
+       scale="13"
+       markers="{{mapMarkers}}"
+       polyline="{{polyline}}"
+       bindmarkertap="onMarkerTap">
+  </map>
+
+  <view class="station-list">
+    <text class="title">站点列表</text>
+    <block wx:for="{{stations}}" wx:key="bus_staname">
+      <view class="station-item">
+        <text>{{index + 1}}. {{item.bus_staname}}</text>
+      </view>
+    </block>
+  </view>
+</view>

@@ -1,12 +1,20 @@
 {
+  
   "pages": [
+    "pages/busSearch/busSearch",
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/busDetail/busDetail"
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "公交查询",
     "navigationBarBackgroundColor": "#ffffff"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序的地图展示"
+    }
   },
   "style": "v2",
   "componentFramework": "glass-easel",

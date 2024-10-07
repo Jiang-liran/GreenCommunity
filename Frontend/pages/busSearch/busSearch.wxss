@@ -1,0 +1,120 @@
+/* container 样式 */
+.container {
+  padding: 16px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 搜索区域 */
+.search-section {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* 输入框组 */
+.input-group {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 输入框图标 */
+.icon {
+  font-size: 24px;
+  color: #888;
+  margin-right: 8px;
+}
+
+/* 输入框 */
+.input {
+  flex: 1;
+  font-size: 16px;
+  color: #333;
+}
+
+/* 城市列表 */
+.city-list {
+  background-color: #fff;
+  border-radius: 8px;
+  max-height: 200px;
+  margin-top: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 城市项 */
+.city-item {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 16px;
+  color: #333;
+}
+.city-item:last-child {
+  border-bottom: none;
+}
+
+/* 无匹配城市 */
+.no-city {
+  padding: 12px;
+  text-align: center;
+  color: #999;
+}
+
+/* 搜索按钮 */
+.search-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1aad19;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.search-button:hover {
+  background-color: #179b16;
+}
+
+/* 线路列表 */
+.bus-list {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 线路项 */
+.bus-item {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bus-item:last-child {
+  border-bottom: none;
+}
+
+/* 线路名称 */
+.bus-name {
+  font-size: 16px;
+  color: #333;
+}
+
+/* 线路路线 */
+.bus-route {
+  font-size: 14px;
+  color: #666;
+}
+
+/* 无结果提示 */
+.no-results {
+  padding: 12px;
+  text-align: center;
+  color: #999;
+}

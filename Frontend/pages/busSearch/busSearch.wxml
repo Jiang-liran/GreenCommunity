@@ -1,0 +1,57 @@
+<view class="container">
+  <!-- 城市搜索输入框 -->
+  <view class="search-section">
+    <view class="input-group">
+      <icon type="search" class="icon"></icon>
+      <input
+        type="text"
+        placeholder="请输入城市名称"
+        bindinput="onCityInput"
+        value="{{cityQuery}}"
+        class="input"
+      />
+    </view>
+    <!-- 城市列表 -->
+    <scroll-view class="city-list" scroll-y="true" wx:if="{{cityQuery}}">
+      <block wx:if="{{filteredCities.length > 0}}">
+        <block wx:for="{{filteredCities}}" wx:key="cityid">
+          <view class="city-item" bindtap="onCitySelect" data-city="{{item}}">
+            {{item.city}}
+          </view>
+        </block>
+      </block>
+      <block wx:else>
+        <view class="no-city">未找到匹配的城市</view>
+      </block>
+    </scroll-view>
+  </view>
+
+  <!-- 线路搜索输入框 -->
+  <view class="search-section">
+    <view class="input-group">
+      <icon type="bus" class="icon"></icon>
+      <input
+        type="text"
+        placeholder="请输入公交线路名称"
+        bindinput="onInput"
+        class="input"
+      />
+    </view>
+  </view>
+
+  <!-- 搜索按钮 -->
+  <button class="search-button" bindtap="onSearch">搜索</button>
+
+  <!-- 线路列表 -->
+  <view class="bus-list">
+    <block wx:for="{{busList}}" wx:key="bus_linestrid">
+      <view class="bus-item" bindtap="onBusTap" data-bus="{{item}}">
+        <text class="bus-name">{{item.bus_staname}} - {{item.bus_stastan}}</text>
+        <text class="bus-route">→ {{item.bus_endstan}}</text>
+      </view>
+    </block>
+    <block wx:if="{{busList.length === 0}}">
+      <view class="no-results">暂无相关线路</view>
+    </block>
+  </view>
+</view>
