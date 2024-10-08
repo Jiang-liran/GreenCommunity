@@ -1,7 +1,5 @@
 // pages/busDetail/busDetail.js
 const app = getApp();
-// 如果使用 MD5，确保已正确引入
-const md5 = require('../../utils/md5.js'); // 根据实际路径调整
 
 Page({
   data: {
@@ -15,7 +13,7 @@ Page({
     longitude: 120.3826, // 默认值：青岛市中心经度
   },
 
-  onLoad: function(options) {
+  onLoad: function() {
     const busInfo = app.globalData.busInfo;
     console.log('busDetail onLoad');
     console.log('app.globalData.busInfo：', app.globalData.busInfo);
@@ -84,7 +82,7 @@ Page({
       this.setDefaultMapCenter();
     }
   },
-  
+
 
   updateMapData: function() {
     const stations = this.data.stations;
@@ -127,7 +125,9 @@ Page({
               longitude: parsedLng,
               latitude: parsedLat,
               name: station.bus_staname,
-              id: index
+              id: index,
+              approachingBuses: [], // 初始化
+              arrivedBuses: []      // 初始化
             };
           } else {
             console.error(`站点 ${station.bus_staname} 的 lng_lat 格式不支持:`, lngLat);
@@ -139,35 +139,95 @@ Page({
         }
       }).filter(point => point !== null); // 过滤掉解析失败的站点
   
-      // 检查 stationPoints 是否有数据
-      if (stationPoints.length > 0) {
-        // 地图中心定位在第一个站点
-        const centerLatitude = stationPoints[0].latitude;
-        const centerLongitude = stationPoints[0].longitude;
+      // 关联车辆到站点
+      stationPoints.forEach((station, index) => {
+        buses.forEach(bus => {
+          const disStat = bus.dis_stat;
+          const distance = bus.distance;
+          const busId = bus.busId || `bus_${index + 1}`; // 确保有busId字段
   
-        console.log('中心经纬度：', centerLongitude, centerLatitude);
-  
-        // 处理车辆列表，获取车辆的经纬度
-        const busMarkers = buses.map((bus, index) => {
-          const parsedLng = parseFloat(bus.longitude);
-          const parsedLat = parseFloat(bus.latitude);
-  
-          if (isNaN(parsedLng) || isNaN(parsedLat)) {
-            console.error(`车辆 ${index + 1} 的经纬度解析失败: longitude=${bus.longitude}, latitude=${bus.latitude}`);
-            return null;
+          // 假设 dis_stat 是1-based index
+          if (disStat === (index + 1)) {
+            if (distance > 0) {
+              station.approachingBuses.push({
+                distance: distance,
+                busId: busId
+              });
+            } else if (distance === 0) {
+              station.arrivedBuses.push({
+                distance: distance,
+                busId: busId
+              });
+            }
           }
+        });
+      });
   
-          return {
-            id: index + 1000, // 避免与站点的 id 冲突
-            longitude: parsedLng,
-            latitude: parsedLat,
-            iconPath: '/images/bus.png',
-            width: 30,
-            height: 30
-          };
-        }).filter(marker => marker !== null);
+      console.log('stationPoints with bus info:', stationPoints);
   
-        console.log('mapMarkers:', [
+      // 地图中心定位在第一个站点
+      const centerLatitude = stationPoints[0].latitude;
+      const centerLongitude = stationPoints[0].longitude;
+  
+      console.log('中心经纬度：', centerLongitude, centerLatitude);
+  
+      // 处理车辆列表，获取车辆的经纬度
+      const busMarkers = buses.map((bus, index) => {
+        const parsedLng = parseFloat(bus.longing); // 使用 'longing'
+        const parsedLat = parseFloat(bus.lating);  // 使用 'lating'
+        const busId = bus.busId || `bus_${index + 1}`; // 确保有busId字段
+  
+        if (isNaN(parsedLng) || isNaN(parsedLat)) {
+          console.error(`车辆 ${index + 1} 的经纬度解析失败: longing=${bus.longing}, lating=${bus.lating}`);
+          return null;
+        }
+  
+        return {
+          id: index + 1000, // 避免与站点的 id 冲突
+          longitude: parsedLng,
+          latitude: parsedLat,
+          iconPath: '/images/bus.png',
+          width: 30,
+          height: 30,
+          callout: {
+            content: `Bus ID: ${busId}`,
+            fontSize: 12,
+            borderRadius: 5,
+            padding: 5,
+            display: 'BYCLICK'
+          }
+        };
+      }).filter(marker => marker !== null);
+  
+      console.log('mapMarkers:', [
+        ...stationPoints.map(point => ({
+          id: point.id,
+          longitude: point.longitude,
+          latitude: point.latitude,
+          iconPath: '/images/station.png',
+          width: 20,
+          height: 20,
+          callout: {
+            content: point.name,
+            fontSize: 12,
+            borderRadius: 5,
+            padding: 5,
+            display: 'BYCLICK'
+          }
+        })),
+        ...busMarkers
+      ]);
+  
+      console.log('polyline:', [{
+        points: stationPoints,
+        color: '#FF0000DD',
+        width: 4,
+        dottedLine: false
+      }]);
+  
+      // 设置地图上的标记和路线
+      this.setData({
+        mapMarkers: [
           ...stationPoints.map(point => ({
             id: point.id,
             longitude: point.longitude,
@@ -184,54 +244,22 @@ Page({
             }
           })),
           ...busMarkers
-        ]);
-  
-        console.log('polyline:', [{
+        ],
+        polyline: [{
           points: stationPoints,
           color: '#FF0000DD',
           width: 4,
           dottedLine: false
-        }]);
-  
-        // 设置地图上的标记和路线
-        this.setData({
-          mapMarkers: [
-            ...stationPoints.map(point => ({
-              id: point.id,
-              longitude: point.longitude,
-              latitude: point.latitude,
-              iconPath: '/images/station.png',
-              width: 20,
-              height: 20,
-              callout: {
-                content: point.name,
-                fontSize: 12,
-                borderRadius: 5,
-                padding: 5,
-                display: 'BYCLICK'
-              }
-            })),
-            ...busMarkers
-          ],
-          polyline: [{
-            points: stationPoints,
-            color: '#FF0000DD',
-            width: 4,
-            dottedLine: false
-          }],
-          latitude: centerLatitude,
-          longitude: centerLongitude
-        });
-      } else {
-        // 设置默认中心点
-        this.setDefaultMapCenter();
-      }
+        }],
+        latitude: centerLatitude,
+        longitude: centerLongitude,
+        stations: stationPoints // 更新stations数据以包含bus info
+      });
     } else {
       // 设置默认中心点
       this.setDefaultMapCenter();
     }
   },
-  
 
   setDefaultMapCenter: function() {
     const defaultLatitude = 36.0671; // 示例：青岛市中心纬度

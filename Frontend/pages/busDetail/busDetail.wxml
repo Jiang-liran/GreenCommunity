@@ -22,17 +22,25 @@
     <text class="title">站点列表</text>
     <block wx:for="{{stations}}" wx:key="sid">
       <view class="station-item">
-        <text>{{index + 1}}. {{item.bus_staname}}</text>
+        <view class="station-info">
+          <text>{{index + 1}}. {{item.name}}</text>
+        </view>
         <view class="bus-info">
-          <!-- 显示车辆当前位置 -->
-          <block wx:if="{{item.buses && item.buses.length > 0}}">
-            <block wx:for="{{item.buses}}" wx:key="busId">
-              <text class="bus-status">🚍 距离下一站 {{item.buses[0].distance}} 米</text>
+          <!-- 显示接近该站点的车辆 -->
+          <block wx:if="{{item.approachingBuses && item.approachingBuses.length > 0}}">
+            <block wx:for="{{item.approachingBuses}}" wx:key="busId">
+              <text class="bus-status">🚍 距离下一站 {{item.distance}} 米 (Bus ID: {{item.busId}})</text>
             </block>
           </block>
-          <!-- 显示车辆已通过 -->
-          <block wx:elif="{{item.busPassed}}">
-            <text class="bus-passed">已通过</text>
+          <!-- 显示已到达该站点的车辆 -->
+          <block wx:elif="{{item.arrivedBuses && item.arrivedBuses.length > 0}}">
+            <block wx:for="{{item.arrivedBuses}}" wx:key="busId">
+              <text class="bus-passed">🚍 已到达 (Bus ID: {{item.busId}})</text>
+            </block>
+          </block>
+          <!-- 无车辆信息 -->
+          <block wx:else>
+            <text class="no-bus">暂无车辆信息</text>
           </block>
         </view>
       </view>

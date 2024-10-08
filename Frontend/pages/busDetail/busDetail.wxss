@@ -41,7 +41,11 @@
   border-bottom: 1px solid #eee;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+}
+
+.station-info {
+  flex: 1;
 }
 
 .bus-info {
@@ -57,5 +61,10 @@
 
 .bus-passed {
   color: #999999;
+  font-size: 14px;
+}
+
+.no-bus {
+  color: #666666;
   font-size: 14px;
 }
